@@ -12,15 +12,16 @@ jobs:
       - run: dotnet test -p:CollectCoverage=true
 
   analyze:
+    needs: [build, test]
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2.3.1
       - run: dotnet tool install --global dotnet-sonarscanner
       - run: |
-          dotnet sonarscanner begin -o:'devops' -k:'devops' -d:sonar.login='521a12419d2a45a5146beb00d5e561d3797187f7' -d:sonar.host.url='https://sonarcloud.io/'
+          dotnet sonarscanner begin -o:'devops' -k:'jpchionglo_devops' -d:sonar.login='3682eccb8fff5b0715098d48fbb55081ee88796a' -d:sonar.host.url='https://sonarcloud.io/'
           dotnet build
           dotnet test -p:CollectCoverage=true
-          dotnet sonarscanner end -d:sonar.login='521a12419d2a45a5146beb00d5e561d3797187f7'
+          dotnet sonarscanner end -d:sonar.login='3682eccb8fff5b0715098d48fbb55081ee88796a'
         env: 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
